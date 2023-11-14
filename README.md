@@ -41,4 +41,18 @@ TIMELINE:
     -> Our model should take those new cases everyday and give us the predicted LOS (in days) for each of the cases, which helps us in managing the resources optimally
     -> The prediction for each cases along with the other features should be stored in a logging table
     -> Once we get the actual discharge_date for each case, that should also be added to the logging table (This helps in identifying the perfomance of the model on ongoing basis        & retrain if needed) 
+    -> logging table will be craeted in SnowFlake
+
+    -> In the logging table we have the predicted length of stay for each cases in the logging table and once the actual discharge happens, we add to the logging table, and then          we will know what is the actual length of stay and as we have the predicted length of stay so their difference is going to give us ethe accuracy of the model, if the               accuracy deteoriates over time we can retrain our model.
+
+
+    **Problem Solving Approach**
+
+    1) Data is not stored in csv format-> our data is in snowflake 
+    2) Development environment is different from data environment-> In order for us to take data out, we need to take the data and built any MLL out of it, so we need to take data        out from data environment to my developing environment in order to do Machine Learning, so in this project our data resides in Snowflake database system and our development        environment is AWS SageMaker
+
+    3) Healthcare Data -> Preprocess& EDA -> Feature Engineering -> Model Ready Data( here we use SQL and do as many simplifications in our data as possible)->SnowfLAKE pYTHON            cONNECTOR-> AWS Sagemaker environment-> Feature Selection-> Modelling Experiments -> Model Deployment ( As a scheduled notebook instance)<-> Model Retraining(as a scheduled        notebook instance) ( we can schedule the notebook at a specified time)
+    4) We take this data daily and use these steps daily-> and overall teh data will be sent back to snowflake-> the predictions along with other features will be sent back to            SnowFlake to create logging table
+    5) Over the time the model might gte detoriated, as new features will be coming, so we need to have a retraining pipeline which monitors the perfomance of teh model
+    
     
